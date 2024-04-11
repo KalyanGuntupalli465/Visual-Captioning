@@ -83,6 +83,7 @@ def generate_caption(image_file):
     
 def main():
     st.title("Visual Caption Generator")
+    st.caption("Aims to generate captions for the images:blush:")
     st.write("These are some suggested images,, click on them to see the predicted captions.... ")
     st.write("Scroll down for the custom images:wink:")
     images = []
