@@ -9,7 +9,7 @@ import os
 
 # Function to generate caption for the image
 
-
+st.set_page_config(page_title='Visual Captioning')
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
         if index == integer:
@@ -98,6 +98,26 @@ def main():
             caption = generate_caption(uploaded_file.name)
             # Display the generated caption
             st.write(caption)
+
+    footer = """
+        <hr>
+        <style>
+.footer {
+    position: absolute;
+    bottom: 2000;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px 0;
+}
+</style>
+        <div style="text-align: center;">
+         <h3>Developed by!!!!</h3>
+         <p>Mohan Kalyan Guntupalli</p>
+        </div>
+                """
+    st.markdown(footer, unsafe_allow_html=True)
+    
 
 if __name__ == "__main__":
     main()
