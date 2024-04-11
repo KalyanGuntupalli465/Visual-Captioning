@@ -1,0 +1,10 @@
+python==3.10.9
+streamlit==1.32.2
+h5py==3.10.0
+jupyter==1.0.0
+keras==2.15.0
+notebook==7.1.1
+numpy==1.26.4
+pillow==10.2.0
+tensorflow==2.15.0
+tqdm==4.66.2
