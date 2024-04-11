@@ -10,6 +10,7 @@ import os
 # Function to generate caption for the image
 
 st.set_page_config(page_title='Visual Captioning')
+
 def idx_to_word(integer, tokenizer):
     for word, index in tokenizer.word_index.items():
         if index == integer:
@@ -63,7 +64,6 @@ def predict_caption(model, image, tokenizer, max_length):
             break
     return in_text
 
-
 def generate_caption(image_file):
     image_id = os.path.splitext(image_file)[0]
     captions = mapping.get(image_id, [])
@@ -78,26 +78,58 @@ def generate_caption(image_file):
         y_pred = predict_caption(model, features[image_id], tokenizer, max_length)
         st.write('--------------------Predicted--------------------')
         return y_pred
+    
 
+    
 def main():
     st.title("Visual Caption Generator")
-
-    # File uploader widget to upload an image
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg"])
+    st.write("These are some suggested images,, click on them to see the predicted captions.... ")
+    st.write("Scroll down for the custom images:wink:")
+    images = []
+    image_names = []
+    folder_path=os.path.join(current_directory, 'Display')
+    t=(200,200)
+    for filename in os.listdir(folder_path):
+        img = Image.open(os.path.join(folder_path, filename))
+        img=img.resize(t)
+        images.append(img)
+        image_names.append(filename)
+    a=None
+    b=None
+    st.write("<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>", unsafe_allow_html=True)
+    for i in range(len(images)):
+        if (i % 5) == 0:
+            row = st.columns(5)
+        with row[i % 5]:
+            st.image(images[i], use_column_width=True)
+            if st.button("Generate",key={image_names[i]}):
+                a=images[i]
+                b=image_names[i]
+                placeholder = st.empty()
+                placeholder.info("Please scroll down !!.")
+                
+    if a != None and b != None:
+        st.image(a, caption="", use_column_width=True)
+        k=generate_caption(b)
+        st.write(k)
+        
+    st.write("<br>", unsafe_allow_html=True)
+    st.write("<br>", unsafe_allow_html=True)
+    st.write("<br>", unsafe_allow_html=True)
+    st.write("<br>", unsafe_allow_html=True)
+    st.markdown("## Choose an Image")
+    uploaded_file = st.file_uploader("", type=["jpg"])
+    st.write("Note: Custom images should be from FLICKR 8K dataset")
     
 
     if uploaded_file is not None:
-        # Display the uploaded image
         image = Image.open(uploaded_file)
-        
         st.image(image, caption="", use_column_width=True)
-
-        # Button to generate caption for the uploaded image
         if st.button("Generate Caption"):
-            # Call function to generate caption
             caption = generate_caption(uploaded_file.name)
-            # Display the generated caption
             st.write(caption)
+
+    
 
     footer = """
         <hr>
@@ -117,6 +149,7 @@ def main():
         </div>
                 """
     st.markdown(footer, unsafe_allow_html=True)
+    
     
 
 if __name__ == "__main__":
