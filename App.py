@@ -90,12 +90,12 @@ def generate_caption(image_file):
         return ""
     else:        
 
-        st.markdown("<h6 style='text-align: center;'>---------------------Actual--------------------- </h6>", unsafe_allow_html=True)
+        st.markdown("<h6 style='text-align: center;'>-------------------------------Actual------------------------------- </h6>", unsafe_allow_html=True)
         
         for caption in captions:
             st.markdown(f"<p class='center'>{caption}</p>", unsafe_allow_html=True)
         y_pred = predict_caption(model, features[image_id], tokenizer, max_length)
-        st.markdown("<h6 style='text-align: center;'>---------------------Predicted--------------------- </h6>", unsafe_allow_html=True)
+        st.markdown("<h6 style='text-align: center;'>-------------------------------Predicted------------------------------- </h6>", unsafe_allow_html=True)
         return y_pred
     
     
